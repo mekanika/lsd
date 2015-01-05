@@ -1,0 +1,23 @@
+{
+  "name": "mekanika-lsd",
+  "version": "0.0.1",
+  "description": "Utility belt - left shift dash _",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mekanika/lsd.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mekanika/lsd/issues"
+  },
+  "homepage": "https://github.com/mekanika/lsd",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0"
+  }
+}
