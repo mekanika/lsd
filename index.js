@@ -5,7 +5,7 @@ var utils = {
   filter: require('./filter'),
   match: require('./match'),
   merge: require('./merge'),
-  sortBy: require('./sortby'),
+  sortBy: require('./sort'),
   toObj: require('./toObj')
 };
 
