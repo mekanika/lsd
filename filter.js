@@ -43,19 +43,17 @@ var filter = function (col, sel, onlyIndex) {
         if (col[i][key] !== sel[key]) match = false;
       }
       if (match) {
-        if (onlyIndex) return i;
-        matches.push( col[i] );
+        matches.push( onlyIndex ? i : col[i] );
       }
     }
     // Function selector
     else if (is.function(sel)) {
       if (sel(col[i])) {
-        if (onlyIndex) return i;
-        matches.push( col[i] );
+        matches.push( onlyIndex ? i : col[i] );
       }
     }
   }
-  return onlyIndex ? -1 : matches;
+  return matches;
 };
 
 module.exports = filter
