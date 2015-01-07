@@ -15,3 +15,5 @@ var merge = function(o) {
   }
   return o;
 };
+
+module.exports = merge;
