@@ -59,7 +59,9 @@ function _match (col, mc) {
         break;
       case 'any':
         for (var i=0; i < val.length; i++) {
-          if ( rec[field].indexOf(val[i]) > -1 ) { hit = true; i = val.length; }
+          if ( rec[field] && rec[field].indexOf(val[i]) > -1 ) {
+            hit = true; i = val.length;
+          }
         }
         break;
     }

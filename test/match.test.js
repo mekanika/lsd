@@ -10,7 +10,8 @@ describe('match', function () {
       {id:1, bits:['apple','banana','carrot','hotdog']},
       {id:2, bits:['banana']},
       {id:3, bits:['carrot','hamburger']},
-      {id:4, bits:['apple','hamburger']}
+      {id:4, bits:['apple','hamburger']},
+      {id:5}
     ];
 
     var res = match(col, {and:[{bits:{any:['apple','hamburger']}}]});
