@@ -56,7 +56,12 @@ function _match (col, mc) {
           else if (rec[field].indexOf(val[i]) === -1) _all = false;
         }
         if (_all) hit = true;
-      break;
+        break;
+      case 'any':
+        for (var i=0; i < val.length; i++) {
+          if ( rec[field].indexOf(val[i]) > -1 ) { hit = true; i = val.length; }
+        }
+        break;
     }
 
     return hit;
