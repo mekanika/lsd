@@ -8,6 +8,43 @@ var is = require('./is');
 
 
 /**
+  Maps a collection plucked by a value `from` onto `into[ field ]`
+
+  @this {Object} Contains `{field, from}`
+*/
+
+var mapCollection = function (into, col) {
+   // Setup default strategies
+  var def = this;
+
+  var target = {};
+  if (into[def.field]) target = JSON.parse(JSON.stringify(into[field]));
+
+  // Bail out if keys are already set
+  if (target[def.from] && def.preserve) return into;
+
+  // Step through collection
+  for (var h=0; h < col.length; h++) {
+
+    // Ensure defaults are set for target
+    if (!target[def.from])
+      target[def.from] = col[h][def.from] instanceof Array ? [] : {};
+
+    // Ensure default behaviour is to Replace the array
+    var ra = def.replaceArray === false ? false : true;
+    var out = merge.call({replaceArray:ra}, target[def.from], col[h][def.from] );
+
+    // Ensure assignment of arrays that have length
+    // (These don't replace `target[def]` by default, so force them here)
+    if (out instanceof Array && out.length !== 0)
+      target[def.from] = out;
+  }
+  into[def.field] = target;
+  return into;
+};
+
+
+/**
   Merges multiple arguments of objects and arrays together, right to left, ie.
   last argument collapses onto second last, onto third last, etc.
 
@@ -28,18 +65,26 @@ var is = require('./is');
   @return Merged arguments
 */
 
-var merge = function(o) {
+var merge = function(into, col) {
   var i = 0, a = arguments, len = a.length;
 
   // Setup default strategies
   var def = this;
-  if (typeof def.preserve === 'undefined') preserve: merge.preserve;
-  if (typeof def.replaceArray === 'undefined') replaceArray: merge.replaceArray;
+  if (typeof def.preserve === 'undefined') def.preserve = merge.preserve;
+  if (typeof def.replaceArray === 'undefined') def.replaceArray = merge.replaceArray;
+
+  var o;
+
+  // Map the collection if directed so
+  if (def.field && def.from) {
+    return mapCollection.call(def, into, col);
+  }
 
   // Step through each argument
   while (++i < len) {
     if (is.object(a[i])) {
-      o = o || {};
+      if (def.field) o = target || {};
+      else o = into || {};
 
       for (var prop in a[i]) {
         if (!a[i].hasOwnProperty(prop)) continue;
@@ -54,21 +99,30 @@ var merge = function(o) {
     }
     else if (is.array(a[i])) {
       // Do not overwrite an existing property if `preserve` is true
-      if (typeof o !== 'undefined' && def.preserve) continue;
-      o = o || [];
+      // if (typeof o !== 'undefined' && def.preserve) continue;
+      if (def.field) o = target || [];
+      else o = into || [];
 
       // undefined: Append
       if (def.replaceArray === undefined) o.push.apply(o, a[i]);
       // true: Replace
-      else if (def.replaceArray) o = a[i];
+      else if (def.replaceArray) {
+        o = a[i];
+        if (!def.field) into = a[i];
+      }
       // false: Overwrite positions
       else {
         for (var k=0; k<a[i].length; k++) o[k] = a[i][k];
       }
-
     }
   }
-  return o;
+
+  if (def.field) {
+    if (into[ def.field] ) into[def.field] = target;
+    else into[ def.field ] = o;
+  }
+
+  return into;
 };
 
 

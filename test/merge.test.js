@@ -72,4 +72,19 @@ describe('merge', function () {
 
   });
 
+  describe('mapCollection', function () {
+    it('default behaviour replaces array', function () {
+      var user = {name:'Zim'};
+      var props = [
+        {boom:[{value:'jack'},4]},
+        {boom:[{value:true}]}
+      ];
+
+      var o = merge.as({field:'extras', from:'boom'}, user, props);
+
+      expect(o.extras.boom).to.have.length(1);
+      expect(o.extras.boom[0].value).to.equal(true);
+    });
+  });
+
 });
