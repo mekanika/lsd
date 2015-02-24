@@ -23,12 +23,18 @@ var is = require('./is');
   - Arrays are appended, not overwriteen
 
   @param {Object|Array}
+  @this {Object} Defaults for `{preserve, replaceArray}`
 
   @return Merged arguments
 */
 
 var merge = function(o) {
   var i = 0, a = arguments, len = a.length;
+
+  // Setup default strategies
+  var def = this;
+  if (typeof def.preserve === 'undefined') preserve: merge.preserve;
+  if (typeof def.replaceArray === 'undefined') replaceArray: merge.replaceArray;
 
   // Step through each argument
   while (++i < len) {
@@ -39,7 +45,7 @@ var merge = function(o) {
         if (!a[i].hasOwnProperty(prop)) continue;
 
         // Do not overwrite an existing property if `preserve` is true
-        if (typeof o[prop] !== 'undefined' && merge.preserve) continue;
+        if (typeof o[prop] !== 'undefined' && def.preserve) continue;
 
         if (is.object(a[i][prop])) o[prop] = merge( o[prop], a[i][prop] );
         if (is.array(a[i][prop])) o[prop] = merge( o[prop], a[i][prop] );
@@ -48,13 +54,13 @@ var merge = function(o) {
     }
     else if (is.array(a[i])) {
       // Do not overwrite an existing property if `preserve` is true
-      if (typeof o !== 'undefined' && merge.preserve) continue;
+      if (typeof o !== 'undefined' && def.preserve) continue;
       o = o || [];
 
       // undefined: Append
-      if (merge.replaceArray === undefined) o.push.apply(o, a[i]);
+      if (def.replaceArray === undefined) o.push.apply(o, a[i]);
       // true: Replace
-      else if (merge.replaceArray) o = a[i];
+      else if (def.replaceArray) o = a[i];
       // false: Overwrite positions
       else {
         for (var k=0; k<a[i].length; k++) o[k] = a[i][k];
@@ -84,16 +90,8 @@ merge.as = function (opts) {
   // Remove the `opts` object from the parameters passed to this function
   args.shift();
 
-  if (opts.preserve) merge.preserve = true;
-  if (typeof opts.replaceArray !== undefined)
-    merge.replaceArray = opts.replaceArray;
-
   // Apply the merge
-  var ret = merge.apply( this, args );
-
-  // Reset the defaults
-  merge.preserve = false;
-  merge.replaceArray = undefined;
+  var ret = merge.apply( opts, args );
 
   return ret;
 };
