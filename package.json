@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/mekanika/lsd",
   "devDependencies": {
-    "chai": "^1.10.0",
-    "mocha": "^2.1.0"
+    "browserify": "^9.0.3",
+    "chai": "^2.1.0",
+    "jshint": "^2.6.0",
+    "mocha": "^2.1.0",
+    "uglify-js": "^2.4.16"
   }
 }
