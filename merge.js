@@ -18,7 +18,7 @@ var mapCollection = function (into, col) {
   var def = this;
 
   var target = {};
-  if (into[def.field]) target = JSON.parse(JSON.stringify(into[field]));
+  if (into[def.field]) target = JSON.parse(JSON.stringify(into[def.field]));
 
   // Bail out if keys are already set
   if (target[def.from] && def.preserve) return into;
@@ -83,7 +83,7 @@ var merge = function(into, col) {
   // Step through each argument
   while (++i < len) {
     if (is.object(a[i])) {
-      if (def.field) o = target || {};
+      if (def.field) o = into[def.field] || {};
       else o = into || {};
 
       for (var prop in a[i]) {
@@ -100,7 +100,7 @@ var merge = function(into, col) {
     else if (is.array(a[i])) {
       // Do not overwrite an existing property if `preserve` is true
       // if (typeof o !== 'undefined' && def.preserve) continue;
-      if (def.field) o = target || [];
+      if (def.field) o = into[def.field] || [];
       else o = into || [];
 
       // undefined: Append
@@ -117,10 +117,8 @@ var merge = function(into, col) {
     }
   }
 
-  if (def.field) {
-    if (into[ def.field] ) into[def.field] = target;
-    else into[ def.field ] = o;
-  }
+  // Replace the `into` object field with our mapped values
+  if (def.field) into[def.field] = o;
 
   return into;
 };

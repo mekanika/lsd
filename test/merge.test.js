@@ -72,6 +72,60 @@ describe('merge', function () {
 
   });
 
+  describe('map onto .field', function () {
+    it('applies object keys to field', function () {
+      var user = {name:'Zim'};
+      var props = {
+        a: {value:'jack'},
+        b: {value:true}
+      };
+
+      var o = merge.as({field:'extras'}, user, props);
+      expect(o.extras).to.have.keys('a','b');
+    });
+
+    it('applies arrays to field', function () {
+      var user = {name:'Zim'};
+      var props = [
+        {a: {value:'jack'}},
+        {b: {value:true}}
+      ];
+
+      var o = merge.as({field:'extras'}, user, props);
+      expect(o.extras).to.have.length(2);
+    });
+
+    it('honours merge strategy on objects', function () {
+      var user = {name:'Zim', extras:{a:'woot!'}};
+      var props = {
+        a: {value:'jack'},
+        b: {value:true}
+      };
+
+      var o = merge.as({preserve:true, field:'extras'}, user, props);
+      expect(o.extras.a).to.equal('woot!');
+    });
+
+    it('honours merge strategy on arrays', function () {
+      var user = {name:'Zim', extras:['swee!']};
+      var props = [
+        'cowa',
+        'bunga'
+      ];
+
+      var o = merge.as({field:'extras', replaceArray:undefined}, user, props);
+      expect(o.extras).to.have.length(3);
+
+      user.extras = ['swee']; // reset user
+      o = merge.as({field:'extras', replaceArray:true}, user, props);
+      expect(o.extras).to.eql(['cowa','bunga']);
+
+      user.extras = [1,2,3]; // reset user
+      o = merge.as({field:'extras', replaceArray:false}, user, props);
+      expect( o.extras ).to.eql(['cowa','bunga',3]);
+    });
+  });
+
   describe('mapCollection', function () {
     it('default behaviour replaces array', function () {
       var user = {name:'Zim'};
