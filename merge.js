@@ -20,24 +20,35 @@ var mapCollection = function (into, col) {
   var target = {};
   if (into[def.field]) target = JSON.parse(JSON.stringify(into[def.field]));
 
-  // Bail out if keys are already set
-  if (target[def.from] && def.preserve) return into;
-
   // Step through collection
   for (var h=0; h < col.length; h++) {
 
+    var key = def.from;
+
+    // `{from:$0}` enables setting key dynamically based on the FIRST key
+    // to be returned from each collection item.
+    if (def.from === '$0') {
+      for (var ix in col[h]) {
+        if (!col[h].hasOwnProperty(ix)) continue;
+        key = ix; break;
+      }
+    }
+
+    // Bail out if keys are already set
+    if (target[key] && def.preserve) continue;
+
     // Ensure defaults are set for target
-    if (!target[def.from])
-      target[def.from] = col[h][def.from] instanceof Array ? [] : {};
+    if (!target[key])
+      target[key] = col[h][key] instanceof Array ? [] : {};
 
     // Ensure default behaviour is to Replace the array
     var ra = def.replaceArray === false ? false : true;
-    var out = merge.call({replaceArray:ra}, target[def.from], col[h][def.from] );
+    var out = merge.call({replaceArray:ra}, target[key], col[h][key] );
 
     // Ensure assignment of arrays that have length
     // (These don't replace `target[def]` by default, so force them here)
     if (out instanceof Array && out.length !== 0)
-      target[def.from] = out;
+      target[key] = out;
   }
   into[def.field] = target;
   return into;

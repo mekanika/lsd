@@ -126,7 +126,7 @@ describe('merge', function () {
     });
   });
 
-  describe('mapCollection', function () {
+  describe('mapCollection .from', function () {
     it('default behaviour replaces array', function () {
       var user = {name:'Zim'};
       var props = [
@@ -138,6 +138,28 @@ describe('merge', function () {
 
       expect(o.extras.boom).to.have.length(1);
       expect(o.extras.boom[0].value).to.equal(true);
+    });
+
+    it('can specify using a SINGLE key object key by $0', function () {
+      var user = {name:'Zim'};
+      var props = [
+        {yo:[{value:'jack'},4]},
+        {wat:[{value:true}]}
+      ];
+
+      var o = merge.as({field:'extras', from:'$0'}, user, props);
+      expect(o.extras).to.have.keys('yo','wat');
+    });
+
+    it('honours merge strategy on $0', function () {
+      var user = {name:'Zim', extras:{yo:1}};
+      var props = [
+        {yo:5},
+        {wat:6}
+      ];
+
+      var o = merge.as({preserve:true, field:'extras', from:'$0'}, user, props);
+      expect(o.extras.yo).to.equal(1);
     });
   });
 
