@@ -38,6 +38,13 @@ describe('merge', function () {
     expect( m ).to.eql([1,2,3,4]);
   });
 
+  it('can set merge.maxArgs to limit number of merge elements', function () {
+    merge.maxArgs = 2;
+    var m = merge( {a:1}, {b:2}, {c:3});
+    merge.maxArgs = undefined;
+    expect( m ).to.eql( {a:1, b:2} );
+  });
+
   describe('.as()', function () {
 
     it('overrides `preserve` to keep existing values', function () {
@@ -68,6 +75,12 @@ describe('merge', function () {
 
       expect(merge.preserve).to.equal(false);
       expect(merge.replaceArray).to.equal(undefined);
+    });
+
+    it('`maxArgs` can limit args', function () {
+      var m = merge.as( {maxArgs:2}, {a:1}, {b:2}, {c:3});
+      expect( m ).to.eql( {a:1, b:2} );
+      expect( merge.maxArgs ).to.equal( undefined );
     });
 
   });

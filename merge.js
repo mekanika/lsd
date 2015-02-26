@@ -77,13 +77,13 @@ var mapCollection = function (into, col) {
 */
 
 var merge = function(into, col) {
-  var i = 0, a = arguments, len = a.length;
-
   // Setup default strategies
   var def = this;
   if (typeof def.preserve === 'undefined') def.preserve = merge.preserve;
   if (typeof def.replaceArray === 'undefined') def.replaceArray = merge.replaceArray;
+  if (typeof def.maxArgs === 'undefined') def.maxArgs = merge.maxArgs;
 
+  var i = 0, a = arguments, len = def.maxArgs || a.length;
   var o;
 
   // Map the collection if directed so
@@ -141,6 +141,7 @@ var merge = function(into, col) {
 
 merge.preserve = false;
 merge.replaceArray = undefined;
+merge.maxArgs = undefined;
 
 
 /**
