@@ -38,4 +38,15 @@ var is = {
   }
 };
 
+
+/**
+  Returns the raw type of the element
+
+  @param {Mixed} el The element to return the type from
+*/
+
+is.type = function (el) {
+  return toType(el);
+};
+
 module.exports = is;

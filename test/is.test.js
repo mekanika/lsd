@@ -86,4 +86,15 @@ describe('.is', function () {
     expect( is.equal({a:{b:1}},{a:{b:2}}) ).to.eql(false);
   });
 
+  it('.type(el)', function () {
+    expect( is.type({}) ).to.equal('object');
+    expect( is.type(1) ).to.equal('number');
+    expect( is.type('1') ).to.equal('string');
+    expect( is.type(function(){}) ).to.equal('function');
+    expect( is.type(true) ).to.equal('boolean');
+    expect( is.type([]) ).to.equal('array');
+    expect( is.type(undefined) ).to.equal('undefined');
+    expect( is.type(new Date()) ).to.equal('date');
+  });
+
 });
