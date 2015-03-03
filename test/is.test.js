@@ -76,6 +76,12 @@ describe('.is', function () {
     expect( is.undefined(undefined) ).to.eql(true);
   });
 
+  it('error', function () {
+    expect( is.error(new Error()) ).to.eql(true);
+    expect( is.error( {message:'Error'} ) ).to.eql(false);
+    expect( is.error( false ) ).to.eql(false);
+  });
+
   it('equal', function () {
     expect( is.equal(1,1) ).to.eql(true);
     expect( is.equal(false, false) ).to.eql(true);

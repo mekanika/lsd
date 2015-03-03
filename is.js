@@ -13,6 +13,7 @@ var is = {
   date: function (v) { return toType(v) === 'date'; },
   function: function (v) { return toType(v) === 'function'; },
   undefined: function (v) { return typeof v === 'undefined'; },
+  error: function (v) { return toType(v) === 'error'; },
   equal: function(a, b) {
     if (a === b) return true;
     var i = -1;
