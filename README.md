@@ -32,4 +32,4 @@ var filter = require('mekanika-lsd/filter');
 
 (The MIT license)
 
-Copyright 2014-2015 Clint Walker
+Copyright 2014-2015 Mekanika
