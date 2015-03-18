@@ -1,6 +1,6 @@
 {
   "name": "mekanika-lsd",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Utility belt - left shift dash _",
   "main": "index.js",
   "scripts": {
