@@ -4,8 +4,11 @@
   "description": "Utility belt - left shift dash _",
   "main": "index.js",
   "scripts": {
+    "browser": "browserify index.js -o build/mekanika-lsd.js -s LSD",
+    "build": "npm run browser && npm run ugly",
     "lint": "jshint -c .jshintrc *.js test/*.js",
     "test": "mocha -R spec test",
+    "ugly": "uglifyjs build/mekanika-lsd.js -cm -o build/mekanika-lsd.min.js"
   },
   "repository": {
     "type": "git",
