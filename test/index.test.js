@@ -18,4 +18,4 @@ describe('Index', function () {
     expect( _.toObj ).to.be.ok;
   });
 
-})
+});

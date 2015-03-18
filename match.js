@@ -30,6 +30,7 @@ function _match (col, mc) {
 
   // Test a record `rec` against a MatchObject `mo`
   var match = function (rec, mo) {
+    var i; // counter
     var field = _lastkey(mo);
     var op = _lastkey( mo[field] );
     var val = mo[field][op];
@@ -50,7 +51,8 @@ function _match (col, mc) {
       case 'lt': if (rec[field] < val) hit = true; break;
       case 'lte': if (rec[field] <= val) hit = true; break;
       case 'all':
-        var _all = true, i = -1;
+        var _all = true;
+        i = -1;
         while (++i < val.length) {
           if (!rec[field]) _all = false;
           else if (rec[field].indexOf(val[i]) === -1) _all = false;
@@ -58,7 +60,7 @@ function _match (col, mc) {
         if (_all) hit = true;
         break;
       case 'any':
-        for (var i=0; i < val.length; i++) {
+        for (i=0; i < val.length; i++) {
           if ( rec[field] && rec[field].indexOf(val[i]) > -1 ) {
             hit = true; i = val.length;
           }

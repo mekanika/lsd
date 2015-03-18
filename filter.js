@@ -56,4 +56,4 @@ var filter = function (col, sel, onlyIndex) {
   return matches;
 };
 
-module.exports = filter
+module.exports = filter;
