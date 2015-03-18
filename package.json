@@ -4,7 +4,8 @@
   "description": "Utility belt - left shift dash _",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R spec test"
+    "lint": "jshint -c .jshintrc *.js test/*.js",
+    "test": "mocha -R spec test",
   },
   "repository": {
     "type": "git",
