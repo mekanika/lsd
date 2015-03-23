@@ -3,19 +3,10 @@
 
 > A small, modular utility belt
 
-`lsd` is a collection of utility components that can be _individually_ loaded as needed and provide for very specific functionality. 
+`lsd` is a repository of utility components that can be _individually_ loaded as needed to provide for very specific functionality. 
 
-## API
 
-- .is.{Type}( item )
-- .clone( item )
-- .filter( collection, selector, onlyIndex )
-- .match( collection, matchCondition )
-- .merge( intoObj, fromObj )
-- .sortBy( collection, field, isReverse )
-- .toObj( key, value )
-
-## Usage
+## Install
 
 For CommonJS (Node) usage, you can include the entire `lsd` belt in your code:
 
@@ -36,8 +27,21 @@ For **browser** usage, the entire library is provided as a build under `/build`.
 <script src="node_modules/mekanika-lsd/build/mekanika-lsd.min.js"></script>
 ```
 
+
+## API
+
+- **.is.$Type**( item ) - type checker
+- **.clone**( item ) - deep object and array cloning
+- **.filter**( collection, selector, onlyIndex ) - filter from collection
+- **.match**( collection, matchCondition ) - MongoDB style collection matching
+- **.merge**( intoObj, fromObj ) - combine elements by merge strategy
+- **.sortBy**( collection, field, isReverse ) - collection sorting
+- **.toObj**( key, value ) - shorthand object creation from `key`, `value`
+
+
+
 ## License
 
-(The MIT license)
-
 Copyright 2014-2015 Mekanika
+
+Released under the **MIT License** ([MIT](http://opensource.org/licenses/MIT))
