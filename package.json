@@ -1,7 +1,7 @@
 {
   "name": "mekanika-lsd",
   "version": "0.1.0",
-  "description": "Utility belt - left shift dash _",
+  "description": "Modular utility belt",
   "main": "index.js",
   "scripts": {
     "browser": "browserify index.js -o build/mekanika-lsd.js -s LSD",
